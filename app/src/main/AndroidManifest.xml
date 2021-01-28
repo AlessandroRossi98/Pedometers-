@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.a05_implementazionealgoritmo">
+
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.05_ImplementazioneAlgoritmo">
+        <activity android:name=".MainActivity" android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".LiveTesting" android:screenOrientation="portrait"></activity>
+        <activity android:name=".NewTest" android:screenOrientation="portrait"></activity>
+        <activity android:name=".CompareConfigurations" android:screenOrientation="portrait"></activity>
+        <activity android:name=".ConfigurationsComparison" android:screenOrientation="portrait"></activity>
+        <activity android:name=".SelectTest" android:screenOrientation="portrait"></activity>
+        <activity android:name=".SendTest" android:screenOrientation="portrait"></activity>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.a05_implementazionealgoritmo.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_path" />
+        </provider>
+
+    </application>
+
+</manifest>
