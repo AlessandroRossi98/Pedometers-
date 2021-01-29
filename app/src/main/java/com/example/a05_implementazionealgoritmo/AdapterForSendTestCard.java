@@ -28,6 +28,7 @@ public class AdapterForSendTestCard extends RecyclerView.Adapter<AdapterForSendT
     private Button send_test;
     private Integer selected_tests;
     private AlertDialog.Builder alert_dialog_builder;
+    private Boolean binding;
 
     public AdapterForSendTestCard(Context context, ArrayList<Card_Test> my_dataset, Integer selected_tests, Button send_test) {
         this.my_dataset = my_dataset;
@@ -68,17 +69,21 @@ public class AdapterForSendTestCard extends RecyclerView.Adapter<AdapterForSendT
             holder.notes.setVisibility(View.GONE);
         else
             holder.notes.setVisibility(View.VISIBLE);
+        binding=true;
         if(my_dataset.get(position).getSelected())
             holder.selected.setChecked(true);
         else
             holder.selected.setChecked(false);
+        binding=false;
         holder.selected.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            my_dataset.get(position).setSelected(isChecked);
-            notifyDataSetChanged();
-            if (isChecked) selected_tests++;
-            else selected_tests--;
-            if (selected_tests>0) send_test.setEnabled(true);
-            else send_test.setEnabled(false);
+            if(!binding) {
+                my_dataset.get(position).setSelected(isChecked);
+                notifyDataSetChanged();
+                if (isChecked) selected_tests++;
+                else selected_tests--;
+                if (selected_tests > 0) send_test.setEnabled(true);
+                else send_test.setEnabled(false);
+            }
         });
         holder.layout.setOnLongClickListener(v -> {
             ((Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE)).vibrate(50);

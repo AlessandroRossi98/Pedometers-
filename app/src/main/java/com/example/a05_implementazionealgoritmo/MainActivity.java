@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
 import android.content.Intent;
+import android.database.CursorWindow;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.Toast;
@@ -17,6 +19,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Field;
 import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
@@ -32,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private StringBuilder my_string_builder;
     private String line;
     private JSONObject json_object;
+    private Field field;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +60,15 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
+        }
+
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            try {
+                field = CursorWindow.class.getDeclaredField("sCursorWindowSize");
+                field.setAccessible(true);
+                field.set(null, 100 * 1024 * 1024); //100MB
+            } catch (Exception e) {
+            }
         }
 
         enter_configuration.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), LiveTesting.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)));
