@@ -117,7 +117,7 @@ public class AdapterForConfigurationsCard extends RecyclerView.Adapter<AdapterFo
                         holder.frequency.setText(context.getResources().getString(R.string.cutoff_frequency_italic)+"10 Hz");
                         break;
                     case 3:
-                        holder.frequency.setText(context.getResources().getString(R.string.cutoff_frequency_italic)+context.getResources().getString(R.string.sampling_rate));
+                        holder.frequency.setText(context.getResources().getString(R.string.cutoff_frequency_italic)+context.getResources().getString(R.string.divided_fifty));
                         break;
                 }
                 break;
