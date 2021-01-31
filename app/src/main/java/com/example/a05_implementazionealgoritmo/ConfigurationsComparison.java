@@ -3,6 +3,7 @@ package com.example.a05_implementazionealgoritmo;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 
 import androidx.annotation.Nullable;
@@ -21,6 +22,7 @@ import org.json.JSONObject;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.concurrent.ExecutionException;
 
@@ -42,16 +44,17 @@ public class ConfigurationsComparison extends AppCompatActivity{
 
     private Integer[] my_colors={Color.BLUE, Color.YELLOW, Color.GREEN, Color.MAGENTA, Color.CYAN, Color.BLACK};
     private ArrayList<LineDataSet> my_lines;
-    private Boolean passo_inidividuato, accelerometer_event;
+    private Boolean passo_inidividuato, accelerometer_event, first_signal;
     private Sensore accelerometro, accelerometro_ascisse, magnetometro;
     private Filtri filtri;
     private Calcoli calcoli;
     private RiconoscimentoValoriChiave riconoscimento_valori_chiave;
     private IndividuazionePasso individuazione_passo;
-    private Integer frequenza_taglio_selected, frequenza_taglio_value;
+    private Integer frequenza_taglio_selected, frequenza_taglio_value, frequenza_campionamento_value, numbero_of_signals, first_second, current_second;
     private BigDecimal alpha;
     private BigDecimal last_acceleration_magnitude;
     private Integer numero_passi_individuati;
+    private Calendar date;
 
     private LineChart line_chart;
     private Button start_new_comparison, select_another_test;
@@ -146,7 +149,9 @@ public class ConfigurationsComparison extends AppCompatActivity{
                             frequenza_taglio_value=10;
                             break;
                     }
-                    alpha = calculateAlpha(250, frequenza_taglio_value);
+                    frequenza_campionamento_value=0;
+                    numbero_of_signals=0;
+                    first_signal=true;
                 }
                 my_iterator = json_object.keys();
                 counter=0;
@@ -222,10 +227,36 @@ public class ConfigurationsComparison extends AppCompatActivity{
                     break;
                 case 1: //passa-basso
                     if(accelerometer_event) {
+
+                        //aggiornamento frequenza di campionamento
+                        if(frequenza_taglio_selected!=3) {
+                            date = Calendar.getInstance();
+                            date.setTimeInMillis(istante);
+                            if(first_signal) {
+                                first_second = date.get(Calendar.SECOND);
+                                current_second = first_second;
+                                first_signal = false;
+                            }
+                            if(date.get(Calendar.SECOND)==first_second){
+                                numbero_of_signals++;
+                                frequenza_campionamento_value++;
+                            }
+                            else if(date.get(Calendar.SECOND)==current_second){
+                                numbero_of_signals++;
+                            }
+                            else {
+                                current_second=date.get(Calendar.SECOND);
+                                frequenza_campionamento_value=numbero_of_signals;
+                                numbero_of_signals=0;
+                            }
+                            alpha = calculateAlpha(frequenza_campionamento_value, frequenza_taglio_value);
+                        }
+
                         accelerometro.setVettore_3_componenti_filtrato(filtri.filtroPassaBasso(accelerometro.getVettore_3_componenti(), alpha));
                         accelerometro.setRisultante_filtrato(calcoli.risultante(accelerometro.getVettore_3_componenti_filtrato()));
-                        if(riconoscimento_valori_chiave.riconoscimentoPuntiMassimoMinimoLocaleRealTime(accelerometro.getRisultante_filtrato(), istante))
+                        if(riconoscimento_valori_chiave.riconoscimentoPuntiMassimoMinimoLocaleRealTime(accelerometro.getRisultante_filtrato(), istante)) {
                             passo_inidividuato = individuazione_passo.individuazionePassoRealTime_SogliaPicco_DifferenzaPiccoValle();
+                        }
                         else
                             passo_inidividuato = false;
                     }
