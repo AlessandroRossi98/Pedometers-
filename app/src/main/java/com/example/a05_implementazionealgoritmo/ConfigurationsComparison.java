@@ -180,9 +180,6 @@ public class ConfigurationsComparison extends AppCompatActivity{
         }
         my_adapter.notifyDataSetChanged();
 
-
-
-
     }
 
     @Override
