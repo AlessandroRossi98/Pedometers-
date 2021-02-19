@@ -3,7 +3,6 @@ package com.example.a05_implementazionealgoritmo;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 
 import androidx.annotation.Nullable;
@@ -78,7 +77,7 @@ public class ConfigurationsComparison extends AppCompatActivity{
         recycler_view=findViewById(R.id.recycler_view);
         start_new_comparison=findViewById(R.id.start_new_comparison);
         select_another_test=findViewById(R.id.select_another_test);
-        start_new_comparison.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), CompareConfigurations.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)));
+        start_new_comparison.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), SelectConfigurationsToCompare.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)));
         select_another_test.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), SelectTest.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION).putExtra("configurations", configurations)));
 
         //inserimento linee nel grafico

@@ -17,7 +17,7 @@ import androidx.fragment.app.DialogFragment;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class CompareConfigurations extends AppCompatActivity {
+public class SelectConfigurationsToCompare extends AppCompatActivity {
     private Button add_configuration, start_comparison;
     private Integer number_of_configurations_selected;
     private TextView number_selected;

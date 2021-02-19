@@ -20,7 +20,7 @@
         </activity>
         <activity android:name=".LiveTesting" android:screenOrientation="portrait"></activity>
         <activity android:name=".NewTest" android:screenOrientation="portrait"></activity>
-        <activity android:name=".CompareConfigurations" android:screenOrientation="portrait"></activity>
+        <activity android:name=".SelectConfigurationsToCompare" android:screenOrientation="portrait"></activity>
         <activity android:name=".ConfigurationsComparison" android:screenOrientation="portrait"></activity>
         <activity android:name=".SelectTest" android:screenOrientation="portrait"></activity>
         <activity android:name=".SendTest" android:screenOrientation="portrait"></activity>

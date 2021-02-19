@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
 
         enter_configuration.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), LiveTesting.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)));
         register_new_test.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), NewTest.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)));
-        compare_configurations.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), CompareConfigurations.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)));
+        compare_configurations.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), SelectConfigurationsToCompare.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)));
         import_test.setOnClickListener(v -> {
             choose_file_intent =new Intent(Intent.ACTION_GET_CONTENT);
             choose_file_intent.addCategory(Intent.CATEGORY_OPENABLE).setType("text/plain");
